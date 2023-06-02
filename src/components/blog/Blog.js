@@ -8,8 +8,8 @@ import {useSelector, useDispatch} from "react-redux";
 
 const Blog = () => {
 
-    //const [posts, setPosts] = useState([]);
     const {posts} = useSelector((store) => store.posts)
+    const {postsSorted} = useSelector((store) => store.posts)
     const [postsLoading, setPostsLoading] = useState(false);
     const [comments, setComments] = useState([]);
     const [commentsShownPost, setCommentsShownPost] = useState(null)
@@ -17,7 +17,6 @@ const Blog = () => {
 
     const addPosts = async () => {
         const res = await axios.get("https://jsonplaceholder.typicode.com/posts")
-        //setPosts(res.data);
         dispatch(setPosts(res.data))
     }
 
@@ -39,20 +38,23 @@ const Blog = () => {
         addComments(commentsShownPost)
     },[commentsShownPost])
 
+    useEffect(() => {
+        if (postsSorted && posts.length > 0) {
+
+            console.log("posts sorted")
+
+            const sortedPosts = [...posts].sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+            dispatch(() => setPosts(sortedPosts))
+
+            console.log(posts)
+        }
+    }, [postsSorted, posts])
     const toggleComments = (currentPostID) => {
         if (currentPostID == commentsShownPost) {
             setCommentsShownPost(null)
         } else {
             setCommentsShownPost(currentPostID)
         }
-    }
-
-    const findPost = () => {
-
-    }
-
-    const sortPosts = () => {
-
     }
 
     return(
@@ -78,7 +80,9 @@ const Blog = () => {
                             {commentsShownPost == post.id && (
                                 comments.map((comment) =>
                                     <ListGroup>
-                                        <ListGroupItem>
+                                        <ListGroupItem
+                                            key={comment.id}
+                                        >
                                             <h4>
                                                 {comment.email}
                                             </h4>

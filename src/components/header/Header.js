@@ -1,12 +1,16 @@
-import { Nav, NavDropdown, Navbar, Image } from 'react-bootstrap';
+import {Nav, NavDropdown, Navbar, Image, Button} from 'react-bootstrap';
 import data from "../../assets/text/aboutMeData.json"
 import styles from "./Header.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
-import {useState} from "react";
 import {Link} from "react-router-dom";
+import PostsControls from "../postsControls/PostsControls";
+import {useDispatch, useSelector} from "react-redux";
+import {togglePostsSorted} from "../../features/posts/postsSlice";
 
 const Header = () => {
 
+    const {posts} = useSelector((store) => store.posts)
+    const dispatch = useDispatch()
     const snowContactData = () => {
         let contactData = []
         for (let i = 0; i < data.contacts.length; i++) {
@@ -22,15 +26,6 @@ const Header = () => {
             variant="dark"
             className={styles.header}
         >
-            <Navbar.Brand>
-               <Image src="../../assets/icons/avatar.png"/>
-                <h1>
-                    {data.name}
-                </h1>
-                <h3>
-                    {snowContactData()}
-                </h3>
-            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
@@ -41,8 +36,20 @@ const Header = () => {
                         </Nav.Link>
                     </NavDropdown>
                 </Nav>
+            <Navbar.Brand>
+               <Image src="../../assets/icons/avatar.png"/>
+                <h1>
+                    {data.name}
+                </h1>
+                <h3>
+                    {snowContactData()}
+                </h3>
+            </Navbar.Brand>
             </Navbar.Collapse>
-
+            <PostsControls
+                onSort = {() => dispatch(togglePostsSorted())}
+                //onSort = {() => console.log("click")}
+            />
         </Navbar>
     )
 }

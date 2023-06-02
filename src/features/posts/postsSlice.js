@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     posts: [],
-    postsSorted: false
+    postsSorted: false,
+    postsSortFindOptionOn: true
 }
 
 const postsSlice = createSlice({
@@ -14,10 +15,13 @@ const postsSlice = createSlice({
         },
         togglePostsSorted(state) {
             state.postsSorted = !state.postsSorted
+        },
+        togglePostsSortFindOptionOn(state) {
+            state.postsSortFindOptionOn = !state.postsSortFindOptionOn
         }
     }
 })
 
-export const {setPosts, togglePostsSorted} = postsSlice.actions
+export const {setPosts, togglePostsSorted, togglePostsSortFindOptionOn} = postsSlice.actions
 export default postsSlice.reducer
 
