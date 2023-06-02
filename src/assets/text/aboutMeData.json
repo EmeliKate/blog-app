@@ -1,0 +1,14 @@
+{
+  "name": "Kate Emelianova",
+  "contacts": [
+    {
+      "type": "email",
+      "id": "emeli.kati@gmail.com"
+    },
+    {
+      "type": "phone",
+      "id": "+7 912 759 1115"
+    }
+  ],
+  "aboutText" : "Училась JavaScript самостоятельно, разрабатывала пет-проджекты с использованием React JS, React Native, Redux, Node.js. Также был опыт некоммерческой разработки игр в команде на Unity и C#. Готова много учиться для развития в сфере IT."
+}
