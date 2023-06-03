@@ -38,13 +38,17 @@ const Blog = () => {
         addComments(commentsShownPost)
     },[commentsShownPost])
 
+    // Maximum update depth exceeded. This can happen when a
+    // component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
+    // React limits the number of nested updates to prevent infinite loops:
+    // error - dispatch(setPosts(sortedPosts)) - why
     useEffect(() => {
         if (postsSorted && posts.length > 0) {
 
             console.log("posts sorted")
 
             const sortedPosts = [...posts].sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
-            dispatch(() => setPosts(sortedPosts))
+            dispatch(setPosts(sortedPosts))
 
             console.log(posts)
         }

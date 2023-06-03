@@ -4,12 +4,11 @@ import styles from "./Header.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Link} from "react-router-dom";
 import PostsControls from "../postsControls/PostsControls";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {togglePostsSorted} from "../../features/posts/postsSlice";
 
 const Header = () => {
 
-    const {posts} = useSelector((store) => store.posts)
     const dispatch = useDispatch()
     const snowContactData = () => {
         let contactData = []
