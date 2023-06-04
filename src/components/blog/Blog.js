@@ -52,7 +52,7 @@ const Blog = () => {
 
             console.log(posts)
         }
-    }, [postsSorted, posts])
+    }, [postsSorted])
     const toggleComments = (currentPostID) => {
         if (currentPostID == commentsShownPost) {
             setCommentsShownPost(null)

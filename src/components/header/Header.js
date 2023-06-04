@@ -47,7 +47,7 @@ const Header = () => {
             </Navbar.Collapse>
             <PostsControls
                 onSort = {() => dispatch(togglePostsSorted())}
-                //onSort = {() => console.log("click")}
+                onFind = {() => console.log("click")}
             />
         </Navbar>
     )

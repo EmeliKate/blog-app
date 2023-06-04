@@ -1,4 +1,4 @@
-import {Button} from 'react-bootstrap';
+import {Button, Form} from 'react-bootstrap';
 import styles from "./PostsControls.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {useSelector} from "react-redux";
@@ -14,7 +14,13 @@ const PostsControls = ({onSort, onFind}) => {
             </Button>
             <Button disabled={!postsSortFindOptionOn} variant={postsSortFindOptionOn ? "primary" : "secondary"} onClick={onFind}>
                 Поиск
+                <Form>
+                    <Form.Control type="text" placeholder="..." />
+                </Form>
             </Button>
+
+
+
         </div>
     )
 }
