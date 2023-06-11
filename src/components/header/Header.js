@@ -5,26 +5,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Link} from "react-router-dom";
 import PostsControls from "../postsControls/PostsControls";
 import {useDispatch, useSelector} from "react-redux";
-import {setPosts, togglePostsSorted} from "../../features/posts/postsSlice";
+import {setPosts, togglePostsSorted, togglePostsSortFindOptionOn} from "../../features/posts/postsSlice";
 import {useEffect} from "react";
 
 const Header = () => {
-
-    const dispatch = useDispatch()
-    const {posts} = useSelector((store) => store.posts)
     const snowContactData = () => {
         let contactData = []
         for (let i = 0; i < data.contacts.length; i++) {
             contactData.push(data.contacts[i].id + " ")
         }
         return contactData
-    }
-
-    const findPosts = (searchText) => {
-        console.log(posts)
-        const foundPosts = [...posts].find(post => post.title.includes(searchText))
-        console.log(foundPosts)
-        dispatch(setPosts(foundPosts))
     }
 
     return (
@@ -54,10 +44,7 @@ const Header = () => {
                 </h3>
             </Navbar.Brand>
             </Navbar.Collapse>
-            <PostsControls
-                onSort = {() => dispatch(togglePostsSorted())}
-                onFind = {() => findPosts}
-            />
+            <PostsControls />
         </Navbar>
     )
 }

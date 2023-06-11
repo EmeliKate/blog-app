@@ -1,26 +1,43 @@
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, Row} from 'react-bootstrap';
 import styles from "./PostsControls.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setPosts, togglePostsSorted, setPostsSearchText} from "../../features/posts/postsSlice";
+import {getElement} from "bootstrap/js/src/util";
+const PostsControls = () => {
 
-const PostsControls = ({onSort, onFind}) => {
-
+    const {posts} = useSelector((store) => store.posts)
     const {postsSortFindOptionOn} = useSelector((store) => store.posts)
+    const {postsSearchText} = useSelector((store) => store.posts)
+    const dispatch = useDispatch()
+    const onSort = () => {
+        dispatch(togglePostsSorted())
+    }
 
-    return (
+    const onFind = (event, inputText) => {
+        console.log("onFind")
+        event.preventDefault()
+        dispatch(setPostsSearchText(inputText))
+    }
+
+        return (
         <div>
             <Button disabled={!postsSortFindOptionOn} variant={postsSortFindOptionOn ? "primary" : "secondary"} onClick={onSort}>
                 Отсортировать
             </Button>
-            <Button disabled={!postsSortFindOptionOn} variant={postsSortFindOptionOn ? "primary" : "secondary"} onClick={onFind}>
-                Поиск
-                <Form>
-                    <Form.Control type="text" placeholder="..." />
-                </Form>
-            </Button>
-
-
-
+            <Form.Group
+                disabled={!postsSortFindOptionOn}
+            >
+                <Form.Label>
+                    Поиск
+                </Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="..."
+                    id="search-form"
+                    // value={postsSearchText}
+                    onChange={(event) => onFind(event, document.getElementById("search-form").value)}/>
+            </Form.Group>
         </div>
     )
 }

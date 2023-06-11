@@ -9,7 +9,9 @@ import {useSelector, useDispatch} from "react-redux";
 const Blog = () => {
 
     const {posts} = useSelector((store) => store.posts)
+    const [allPosts, setAllPosts] = useState([])
     const {postsSorted} = useSelector((store) => store.posts)
+    const {postsSearchText} = useSelector((store) => store.posts)
     const [postsLoading, setPostsLoading] = useState(false);
     const [comments, setComments] = useState([]);
     const [commentsShownPost, setCommentsShownPost] = useState(null)
@@ -18,11 +20,7 @@ const Blog = () => {
     const addPosts = async () => {
         const res = await axios.get("https://jsonplaceholder.typicode.com/posts")
         dispatch(setPosts(res.data))
-    }
-
-    const addComments = async (postId) => {
-        const res = await axios.get("https://jsonplaceholder.typicode.com/posts/" + postId + "/comments")
-        setComments(res.data);
+        setAllPosts(res.data)
     }
 
     useEffect(() => {
@@ -34,9 +32,23 @@ const Blog = () => {
         return () => clearTimeout(timer);
     },[])
 
+    const addComments = async (postId) => {
+        const res = await axios.get("https://jsonplaceholder.typicode.com/posts/" + postId + "/comments")
+        setComments(res.data);
+    }
+
+    const toggleComments = (currentPostID) => {
+        if (currentPostID == commentsShownPost) {
+            setCommentsShownPost(null)
+        } else {
+            setCommentsShownPost(currentPostID)
+        }
+    }
+
     useEffect(() => {
         addComments(commentsShownPost)
     },[commentsShownPost])
+
 
     useEffect(() => {
         if (postsSorted && posts.length > 0) {
@@ -49,13 +61,15 @@ const Blog = () => {
             console.log(posts)
         }
     }, [postsSorted])
-    const toggleComments = (currentPostID) => {
-        if (currentPostID == commentsShownPost) {
-            setCommentsShownPost(null)
+
+    useEffect(() => {
+        if (postsSearchText == "") {
+            addPosts()
         } else {
-            setCommentsShownPost(currentPostID)
+            const foundPosts = allPosts.filter((post) => post.title.includes(postsSearchText))
+            dispatch(setPosts(foundPosts))
         }
-    }
+    }, [postsSearchText])
 
     return(
         <ListGroup className={styles.blog}>

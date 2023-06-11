@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     posts: [],
     postsSorted: false,
-    postsSortFindOptionOn: true
+    postsSortFindOptionOn: true,
+    postsSearchText: ""
 }
 
 const postsSlice = createSlice({
@@ -18,10 +19,13 @@ const postsSlice = createSlice({
         },
         togglePostsSortFindOptionOn(state) {
             state.postsSortFindOptionOn = !state.postsSortFindOptionOn
+        },
+        setPostsSearchText(state, action){
+            state.postsSearchText = action.payload
         }
     }
 })
 
-export const {setPosts, togglePostsSorted, togglePostsSortFindOptionOn} = postsSlice.actions
+export const {setPosts, togglePostsSorted, togglePostsSortFindOptionOn, setPostsSearchText} = postsSlice.actions
 export default postsSlice.reducer
 
