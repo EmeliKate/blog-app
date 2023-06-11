@@ -4,7 +4,9 @@ import {Button, Image, ListGroup, ListGroupItem} from 'react-bootstrap';
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import {setPosts} from "../../features/posts/postsSlice";
+import {setUserId} from "../../features/users/usersSlice";
 import {useSelector, useDispatch} from "react-redux";
+import {Link} from "react-router-dom";
 
 const Blog = () => {
 
@@ -85,9 +87,9 @@ const Blog = () => {
                             <div>
                                 {post.body}
                             </div>
-                            <Button>
-                                <Image src="../../assets/icons/avatar.png" />
-                            </Button>
+                            <Link to={"/users/:" + post.id + "/posts"}>
+                                <Image src = "../../assets/icons/avatar.png" onClick={() => dispatch(setUserId(post.userId))} />
+                            </Link>
                             <Button onClick={() => toggleComments(post.id)}>
                                 Комментарии
                             </Button>

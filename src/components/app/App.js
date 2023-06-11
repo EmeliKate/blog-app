@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../header/Header";
 import AboutMe from "../aboutMe/AboutMe";
 import Blog from "../blog/Blog";
+import AboutUser from "../aboutUser/AboutUser";
 import {Route, Routes} from "react-router-dom"
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
       <Routes>
           <Route path="/aboutMe" element={<AboutMe/>}/>
           <Route path="/" element={<Blog />}/>
-          {/*<Route path="/users/:id/posts" element={<AboutUser />}/>*/}
+          <Route path="/users/:id/posts" element={<AboutUser />}/>
       </Routes>
   </div>
 }

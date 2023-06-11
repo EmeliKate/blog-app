@@ -1,4 +1,4 @@
-import {Button, Form, Row} from 'react-bootstrap';
+import {Button, CloseButton, Form, Row} from 'react-bootstrap';
 import styles from "./PostsControls.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {useDispatch, useSelector} from "react-redux";
@@ -35,8 +35,14 @@ const PostsControls = () => {
                     type="text"
                     placeholder="..."
                     id="search-form"
-                    // value={postsSearchText}
-                    onChange={(event) => onFind(event, document.getElementById("search-form").value)}/>
+                    value={postsSearchText}
+                    onChange={(event) => onFind(event, document.getElementById("search-form").value)}
+                />
+                <CloseButton
+                    onClick={() => dispatch(setPostsSearchText(""))}
+                    variant="white"
+                >
+                </CloseButton>
             </Form.Group>
         </div>
     )
