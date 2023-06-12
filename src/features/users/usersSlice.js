@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    userId: null
+    userId: null,
+    postsSortedByUser: false
 }
 
 const usersSlice = createSlice({
@@ -10,9 +11,12 @@ const usersSlice = createSlice({
     reducers: {
         setUserId(state, action) {
             state.userId = action.payload
+        },
+        setPostsSortedByUser(state, action) {
+            state.postsSortedByUser = action.payload
         }
     }
 })
 
-export const {setUserId} = usersSlice.actions
+export const {setUserId, setPostsSortedByUser} = usersSlice.actions
 export default usersSlice.reducer

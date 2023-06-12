@@ -3,8 +3,9 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import {setPosts} from "../../features/posts/postsSlice";
 import {useEffect, useState} from "react";
-import {setUserId} from "../../features/users/usersSlice";
-import {useSelector} from "react-redux";
+import {setUserId, setPostsSortedByUser} from "../../features/users/usersSlice";
+import {useDispatch, useSelector} from "react-redux";
+import Blog from "../blog/Blog"
 
 const AboutUser = () => {
 
@@ -12,6 +13,7 @@ const AboutUser = () => {
     const {userId} = useSelector((store) => store.users)
     const {posts} = useSelector((store) => store.posts)
     const [userInfo, setUserInfo] = useState({})
+    const dispatch = useDispatch()
     const addInfo = async () => {
         console.log(userId)
         if (userId > 0) {
@@ -20,6 +22,8 @@ const AboutUser = () => {
             console.log(res.data)
         }
     }
+
+    //if userid is not changed - posts are not sorted by user
 
     useEffect(() => {
         setPostsLoading(true)
@@ -30,11 +34,9 @@ const AboutUser = () => {
         return () => clearTimeout(timer);
     },[])
 
-    const userPosts = [...posts].filter((post) => post.userId == userId)
-
     return (
         <div>
-            <Button variant="dark">
+            <Button variant="dark" onClick={() => dispatch(setPostsSortedByUser(false))}>
                 <Link to="/">Назад</Link>
             </Button>
             <h1>
@@ -50,20 +52,21 @@ const AboutUser = () => {
             <h1>
                 Посты автора
             </h1>
-            {userPosts.map((post) =>
-            <ListGroup>
-                <ListGroupItem
-                    key={post.id}
-                >
-                    <h2>
-                        {post.title}
-                    </h2>
-                    <div>
-                        {post.body}
-                    </div>
-                </ListGroupItem>
-            </ListGroup>
-            )}
+            {/*{userPosts.map((post) =>*/}
+            {/*<ListGroup>*/}
+            {/*    <ListGroupItem*/}
+            {/*        key={post.id}*/}
+            {/*    >*/}
+            {/*        <h2>*/}
+            {/*            {post.title}*/}
+            {/*        </h2>*/}
+            {/*        <div>*/}
+            {/*            {post.body}*/}
+            {/*        </div>*/}
+            {/*    </ListGroupItem>*/}
+            {/*</ListGroup>*/}
+            {/*)}*/}
+            <Blog />
         </div>
     )
 }

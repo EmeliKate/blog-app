@@ -4,7 +4,7 @@ import {Button, Image, ListGroup, ListGroupItem} from 'react-bootstrap';
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import {setPosts} from "../../features/posts/postsSlice";
-import {setUserId} from "../../features/users/usersSlice";
+import {setUserId, setPostsSortedByUser} from "../../features/users/usersSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 
@@ -14,15 +14,21 @@ const Blog = () => {
     const [allPosts, setAllPosts] = useState([])
     const {postsSorted} = useSelector((store) => store.posts)
     const {postsSearchText} = useSelector((store) => store.posts)
+    const {postsSortedByUser} = useSelector((store) => store.users)
+    const {userId} = useSelector((store) => store.users)
     const [postsLoading, setPostsLoading] = useState(false);
     const [comments, setComments] = useState([]);
     const [commentsShownPost, setCommentsShownPost] = useState(null)
     const dispatch = useDispatch()
 
     const addPosts = async () => {
+        console.log("addPosts")
         const res = await axios.get("https://jsonplaceholder.typicode.com/posts")
-        dispatch(setPosts(res.data))
         setAllPosts(res.data)
+
+        if (!postsSortedByUser) {
+            dispatch(setPosts(res.data))
+        }
     }
 
     useEffect(() => {
@@ -73,6 +79,19 @@ const Blog = () => {
         }
     }, [postsSearchText])
 
+    useEffect(() => {
+        if (postsSortedByUser) {
+            const userPosts = posts.filter((post) => post.userId == userId)
+            dispatch(setPosts(userPosts))
+        }
+    }, [postsSortedByUser, userId])
+
+    const handleUserClick = (post) => {
+        dispatch(setPostsSortedByUser(true))
+        dispatch(setUserId(post.userId))
+        console.log("user click " + post.userId)
+    }
+
     return(
         <ListGroup className={styles.blog}>
             {postsLoading ? (
@@ -88,7 +107,7 @@ const Blog = () => {
                                 {post.body}
                             </div>
                             <Link to={"/users/:" + post.id + "/posts"}>
-                                <Image src = "../../assets/icons/avatar.png" onClick={() => dispatch(setUserId(post.userId))} />
+                                <Image src = "../../assets/icons/avatar.png" onClick={() => handleUserClick(post)} />
                             </Link>
                             <Button onClick={() => toggleComments(post.id)}>
                                 Комментарии
