@@ -2,8 +2,7 @@ import {Button, CloseButton, Form, Row} from 'react-bootstrap';
 import styles from "./PostsControls.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {useDispatch, useSelector} from "react-redux";
-import {setPosts, togglePostsSorted, setPostsSearchText} from "../../features/posts/postsSlice";
-import {getElement} from "bootstrap/js/src/util";
+import {togglePostsSorted, setPostsSearchText} from "../../features/posts/postsSlice";
 const PostsControls = () => {
 
     const {posts} = useSelector((store) => store.posts)
@@ -15,7 +14,6 @@ const PostsControls = () => {
     }
 
     const onFind = (event, inputText) => {
-        console.log("onFind")
         event.preventDefault()
         dispatch(setPostsSearchText(inputText))
     }

@@ -4,9 +4,6 @@ import styles from "./Header.module.scss"
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Link} from "react-router-dom";
 import PostsControls from "../postsControls/PostsControls";
-import {useDispatch, useSelector} from "react-redux";
-import {setPosts, togglePostsSorted, togglePostsSortFindOptionOn} from "../../features/posts/postsSlice";
-import {useEffect} from "react";
 
 const Header = () => {
     const snowContactData = () => {

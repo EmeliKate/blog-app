@@ -5,7 +5,9 @@ import data from "../../assets/text/aboutMeData.json"
 const AboutMe = () => {
     return (
         <div>
-            {data.aboutText}
+            <h5>
+                {data.aboutText}
+            </h5>
         </div>
     )
 }

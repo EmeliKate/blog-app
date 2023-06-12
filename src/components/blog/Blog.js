@@ -22,7 +22,6 @@ const Blog = () => {
     const dispatch = useDispatch()
 
     const addPosts = async () => {
-        console.log("addPosts")
         const res = await axios.get("https://jsonplaceholder.typicode.com/posts")
         setAllPosts(res.data)
 
@@ -60,13 +59,8 @@ const Blog = () => {
 
     useEffect(() => {
         if (postsSorted && posts.length > 0) {
-
-            console.log("posts sorted")
-
             const sortedPosts = [...posts].sort((a,b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
             dispatch(setPosts(sortedPosts))
-
-            console.log(posts)
         }
     }, [postsSorted])
 
@@ -89,7 +83,6 @@ const Blog = () => {
     const handleUserClick = (post) => {
         dispatch(setPostsSortedByUser(true))
         dispatch(setUserId(post.userId))
-        console.log("user click " + post.userId)
     }
 
     return(
